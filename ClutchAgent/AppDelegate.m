@@ -96,8 +96,12 @@
             NSArray* interfaces = [clutch getInterfaces];
             for (ClutchInterface* interface in interfaces) {
                 // if the name and ipv4 status match, treat as identical
-                if ([interface.name isEqualToString:bindInterface.name]) {
-                    if (![interface.address isEqualToString:bindInterface.address] || interface.ipv4 != bindInterface.ipv4) {
+                // (don't treat interfaces with the same name but different ipv4/ipv6 statuses as identical,
+                // as some VPNs or networks may not support IPv6 and could send this traffic in the clear instead
+                // if an IPv6 interface is used instead of its IPv4 counterpart)
+                
+                if ([interface.name isEqualToString:bindInterface.name] && interface.ipv4 == bindInterface.ipv4) {
+                    if (![interface.address isEqualToString:bindInterface.address]) {
                         NSLog(@"interface address changed, binding to new IP...\n");
                         [clutch bindToInterface:interface];
                         bindInterface = interface; // used below to update status
