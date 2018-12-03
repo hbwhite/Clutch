@@ -19,4 +19,18 @@ The app has 2 parts:
 ## Download
 
 You can download the app here (move it to your Applications folder):
+https://mega.nz/#!qEh1AQQY!TK2gStUVWhaSG_hB-G_NSLjg2pcS8PEW4Jz1pYOyS5I
+
+## Changelog
+
+v1.1: Clutch now treats interfaces with the same name but different IPv4/IPv6 statuses as separate interfaces, preventing any traffic from accidentally being sent in the clear if a VPN doesn't support IPv6.
+
+v1.0: Initial release
+
+## Archives
+
+v1.1:
+https://mega.nz/#!qEh1AQQY!TK2gStUVWhaSG_hB-G_NSLjg2pcS8PEW4Jz1pYOyS5I
+
+v1.0:
 https://mega.nz/#!PYoQHKpY!ID4wO3XDzjfmsGqFws1AdiOT3PVkyRw7fbn3h7ZQXpc
