@@ -19,6 +19,7 @@ The app has 2 parts:
 ## Download
 
 You can download the app here (move it to your Applications folder):
+
 https://mega.nz/#!qEh1AQQY!TK2gStUVWhaSG_hB-G_NSLjg2pcS8PEW4Jz1pYOyS5I
 
 ## Changelog
