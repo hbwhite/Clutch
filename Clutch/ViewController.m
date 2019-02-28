@@ -39,10 +39,10 @@
 #import "Clutch.h"
 #import <ServiceManagement/ServiceManagement.h>
 
-NSString* kSavedTextKey = @"Saved Text";
-NSString* kHelpShownKey = @"Help Shown3";
+static NSString* kSavedTextKey        = @"Saved Text";
+static NSString* kHelpShownKey        = @"Help Shown3";
 
-NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
+static NSString* kClutchAgentBundleID = @"com.rcx.clutchagent";
 
 @interface ViewController () <NSControlTextEditingDelegate>
 
@@ -58,13 +58,13 @@ NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
 @implementation ViewController
 
 - (IBAction)bindToInterfaceClicked:(id)sender {
-    if ([_clutch getBindInterface]) {
+    if ([self.clutch getBindInterface]) {
         NSLog(@"unbinding");
-        [_clutch unbindFromInterface];
+        [self.clutch unbindFromInterface];
     }
     else {
         NSLog(@"binding");
-        [_clutch bindToInterfaceWithName:_interfaceDropdown.stringValue];
+        [self.clutch bindToInterfaceWithName:self.interfaceDropdown.stringValue];
     }
     
     [self saveText];
@@ -80,11 +80,11 @@ NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
 }
 
 - (void)saveText {
-    // _interfaceDropdown.currentEditor.selectedRange = NSMakeRange(0, _interfaceDropdown.stringValue.length);
+    // self.interfaceDropdown.currentEditor.selectedRange = NSMakeRange(0, self.interfaceDropdown.stringValue.length);
     
     // save the text
-    NSUserDefaults* defaults = [_clutch clutchGroupDefaults];
-    [defaults setObject:_interfaceDropdown.stringValue forKey:kSavedTextKey];
+    NSUserDefaults* defaults = [self.clutch clutchGroupDefaults];
+    [defaults setObject:self.interfaceDropdown.stringValue forKey:kSavedTextKey];
     [defaults synchronize];
 }
 
@@ -106,10 +106,10 @@ NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
     
     // this shows the user that, for a manual entry, they only need to enter the name of the interface
     
-    NSInteger index = _interfaceDropdown.indexOfSelectedItem;
-    if (index >= 0 && index < _interfaces.count) {
-        ClutchInterface* selectedInterface = [_interfaces objectAtIndex:_interfaceDropdown.indexOfSelectedItem];
-        _interfaceDropdown.stringValue = selectedInterface.name;
+    NSInteger index = self.interfaceDropdown.indexOfSelectedItem;
+    if (index >= 0 && index < self.interfaces.count) {
+        ClutchInterface* selectedInterface = [self.interfaces objectAtIndex:self.interfaceDropdown.indexOfSelectedItem];
+        self.interfaceDropdown.stringValue = selectedInterface.name;
     }
 }
 
@@ -211,45 +211,51 @@ NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
 
 - (void)updateInterfaceDropdown {
     // select bound interface
-    ClutchInterface* bindInterface = [_clutch getBindInterface];
+    ClutchInterface* bindInterface = [self.clutch getBindInterface];
     
     if (bindInterface) {
         // update ui
-        _interfaceDropdown.stringValue = bindInterface.name;
-        _interfaceDropdown.enabled = NO;
-        _bindButton.title = @"Unbind Transmission from Interface";
+        self.interfaceDropdown.stringValue = bindInterface.name;
+        self.interfaceDropdown.enabled = NO;
+        self.bindButton.title = @"Unbind Transmission from Interface";
         
-        _statusLabel.stringValue = [NSString stringWithFormat:@"Binding to %@", _interfaceDropdown.stringValue];
-        _statusLabel.textColor = [NSColor colorWithRed:0 green:0.4 blue:0 alpha:1];
+        self.statusLabel.stringValue = [NSString stringWithFormat:@"Binding to %@", self.interfaceDropdown.stringValue];
+        
+        // different shade of green for Dark Mode (looks better)
+        // self.statusLabel.textColor = [NSColor colorWithRed:0 green:0.4 blue:0 alpha:1];
+        self.statusLabel.textColor = [NSColor colorNamed:@"greenColor"];
     }
     else {
         // update interfaces
-        [_interfaces setArray:[_clutch getInterfaces]];
+        [self.interfaces setArray:[self.clutch getInterfaces]];
         
         // populate list of interface names with info
         NSMutableArray* interfaceNames = [[NSMutableArray alloc]init];
-        for (ClutchInterface* interface in _interfaces) {
+        for (ClutchInterface* interface in self.interfaces) {
             NSString* name = [self humanReadableNameFromInterface:interface];
             NSLog(@"adding %@...", name);
             [interfaceNames addObject:name];
         }
         
         // refresh interface dropdown
-        [_interfaceDropdown removeAllItems];
-        [_interfaceDropdown addItemsWithObjectValues:interfaceNames];
+        [self.interfaceDropdown removeAllItems];
+        [self.interfaceDropdown addItemsWithObjectValues:interfaceNames];
         
         // load the last text that was in the text field
-        NSString* savedText = [[_clutch clutchGroupDefaults]objectForKey:kSavedTextKey];
+        NSString* savedText = [[self.clutch clutchGroupDefaults]objectForKey:kSavedTextKey];
         if (savedText) {
-            _interfaceDropdown.stringValue = savedText;
+            self.interfaceDropdown.stringValue = savedText;
         }
         
         // update ui
-        _interfaceDropdown.enabled = YES;
-        _bindButton.title = @"Bind Transmission to Interface";
+        self.interfaceDropdown.enabled = YES;
+        self.bindButton.title = @"Bind Transmission to Interface";
         
-        _statusLabel.stringValue = @"Not Binding";
-        _statusLabel.textColor = [NSColor blackColor];
+        self.statusLabel.stringValue = @"Not Binding";
+        
+        // using [NSColor labelColor] will automatically set the default text color for light/dark mode
+        // (black for light mode, white for dark mode)
+        self.statusLabel.textColor = [NSColor labelColor];
     }
 }
 
@@ -258,8 +264,8 @@ NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
 
     // Do any additional setup after loading the view.
     
-    _interfaces = [[NSMutableArray alloc]init];
-    _clutch = [[Clutch alloc]init];
+    self.interfaces = [[NSMutableArray alloc]init];
+    self.clutch = [[Clutch alloc]init];
     
     [self updateInterfaceDropdown];
     
@@ -267,7 +273,7 @@ NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
     LSSharedFileListItemRef clutchAgentLoginItem = nil;
     LSSharedFileListRef loginItemsList = nil;
     [self getClutchAgentLoginItem:&clutchAgentLoginItem loginItemsList:&loginItemsList];
-    _openClutchAgentAtLoginButton.state = (clutchAgentLoginItem ? NSOnState : NSOffState);
+    self.openClutchAgentAtLoginButton.state = (clutchAgentLoginItem ? NSOnState : NSOffState);
     CFRelease(loginItemsList); // don't forget to release memory
     
     // launch agent if it isn't running
@@ -278,7 +284,7 @@ NSString* kClutchAgentBundleID  = @"com.rcx.clutchagent";
     // show help if this is the first launch
     // this is done in -viewDidAppear because the window needs to exist first
     
-    NSUserDefaults* defaults = [_clutch clutchGroupDefaults];
+    NSUserDefaults* defaults = [self.clutch clutchGroupDefaults];
     if (![defaults boolForKey:kHelpShownKey]) {
         [self showHelp];
         

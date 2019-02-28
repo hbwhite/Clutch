@@ -52,5 +52,11 @@
     // Insert code here to tear down your application
 }
 
+// quit Clutch when the user clicks the red x button in the corner
+// so we don't have an unnecessary app running in the background
+// (Clutch Agent is separate and will continue to run)
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
+    return YES;
+}
 
 @end

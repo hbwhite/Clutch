@@ -24,11 +24,21 @@ https://mega.nz/#!qEh1AQQY!TK2gStUVWhaSG_hB-G_NSLjg2pcS8PEW4Jz1pYOyS5I
 
 ## Changelog
 
-v1.1: Clutch now treats interfaces with the same name but different IPv4/IPv6 statuses as separate interfaces, preventing any traffic from accidentally being sent in the clear if a VPN doesn't support IPv6.
+v1.2:
+- Support for Dark Mode (colors have been adjusted to work in both Light and Dark Mode)
+- You can now resize the window (uses AutoLayout so the UI is perfect)
+- Other UI improvements
 
-v1.0: Initial release
+v1.1:
+- Clutch now treats interfaces with the same name but different IPv4/IPv6 statuses as separate interfaces, preventing any traffic from accidentally being sent in the clear if a VPN doesn't support IPv6.
+
+v1.0:
+- Initial release
 
 ## Archives
+
+v1.2:
+https://mega.nz/#!2IAXUYJL!jN7EBqaT9mFQI0SjDl-rE7ISlM_zmiYatGhfLqjxT9c
 
 v1.1:
 https://mega.nz/#!qEh1AQQY!TK2gStUVWhaSG_hB-G_NSLjg2pcS8PEW4Jz1pYOyS5I

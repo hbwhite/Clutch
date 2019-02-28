@@ -68,17 +68,17 @@ static void *kAppTerminatedContext  = &kAppTerminatedContext;
 
 // make serializable for storing in NSUserDefaults
 - (void)encodeWithCoder:(NSCoder *)coder {
-    [coder encodeObject:_name forKey:@"name"];
-    [coder encodeObject:_address forKey:@"address"];
-    [coder encodeBool:_ipv4 forKey:@"ipv4"];
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeObject:self.address forKey:@"address"];
+    [coder encodeBool:self.ipv4 forKey:@"ipv4"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
-        _name       = [coder decodeObjectForKey:@"name"];
-        _address    = [coder decodeObjectForKey:@"address"];
-        _ipv4       = [coder decodeBoolForKey:@"ipv4"];
+        self.name       = [coder decodeObjectForKey:@"name"];
+        self.address    = [coder decodeObjectForKey:@"address"];
+        self.ipv4       = [coder decodeBoolForKey:@"ipv4"];
     }
     return self;
 }
@@ -100,16 +100,16 @@ static void *kAppTerminatedContext  = &kAppTerminatedContext;
 - (id)init {
     self = [super init];
     if (self) {
-        _clutchGroupDefaults = [[NSUserDefaults alloc]initWithSuiteName:kGroupPreferencesID];
-        _transmissionDefaults = [[NSUserDefaults alloc]initWithSuiteName:kTransmissionBundleID];
+        self.clutchGroupDefaults = [[NSUserDefaults alloc]initWithSuiteName:kGroupPreferencesID];
+        self.transmissionDefaults = [[NSUserDefaults alloc]initWithSuiteName:kTransmissionBundleID];
         
-        _transmissionInstances = [[NSMutableArray alloc]init];
+        self.transmissionInstances = [[NSMutableArray alloc]init];
     }
     return self;
 }
 
 - (ClutchInterface *)getBindInterface {
-    NSData *data = [_clutchGroupDefaults objectForKey:kBindInterfaceKey];
+    NSData *data = [self.clutchGroupDefaults objectForKey:kBindInterfaceKey];
     return data ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : nil;
 }
 
@@ -119,8 +119,8 @@ static void *kAppTerminatedContext  = &kAppTerminatedContext;
     [transmissionDefaults removeObjectForKey:kBindAddressIPv6Key];
     [transmissionDefaults synchronize];
     
-    [_clutchGroupDefaults removeObjectForKey:kBindInterfaceKey];
-    [_clutchGroupDefaults synchronize];
+    [self.clutchGroupDefaults removeObjectForKey:kBindInterfaceKey];
+    [self.clutchGroupDefaults synchronize];
     
     return [self restartTransmission];
 }
@@ -137,8 +137,8 @@ static void *kAppTerminatedContext  = &kAppTerminatedContext;
     }
     [transmissionDefaults synchronize];
     
-    [_clutchGroupDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:interface] forKey:kBindInterfaceKey];
-    [_clutchGroupDefaults synchronize];
+    [self.clutchGroupDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:interface] forKey:kBindInterfaceKey];
+    [self.clutchGroupDefaults synchronize];
     
     return [self restartTransmission];
 }
@@ -191,9 +191,9 @@ static void *kAppTerminatedContext  = &kAppTerminatedContext;
     
     // retain these NSRunningApplication instances
     // otherwise they will be released by ARC while we're still observing them to see when they terminate and crash the app
-    [_transmissionInstances addObjectsFromArray:[NSRunningApplication runningApplicationsWithBundleIdentifier:kTransmissionBundleID]];
+    [self.transmissionInstances addObjectsFromArray:[NSRunningApplication runningApplicationsWithBundleIdentifier:kTransmissionBundleID]];
     
-    for (NSRunningApplication* app in _transmissionInstances) {
+    for (NSRunningApplication* app in self.transmissionInstances) {
         [app addObserver:self forKeyPath:kAppTerminatedKeyPath options:NSKeyValueObservingOptionNew context:kAppTerminatedContext];
         
         // if plain -terminate was used, Transmission would present an "are you sure" dialog that would prevent the app from quitting
@@ -213,7 +213,7 @@ static void *kAppTerminatedContext  = &kAppTerminatedContext;
         [object removeObserver:self forKeyPath:kAppTerminatedKeyPath context:kAppTerminatedContext];
         
         // we no longer need to retain this NSRunningApplication instance
-        [_transmissionInstances removeObject:object];
+        [self.transmissionInstances removeObject:object];
         
         // relaunch Transmission since it was running
         [[NSWorkspace sharedWorkspace]launchApplication:@"Transmission"];

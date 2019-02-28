@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "clutch-1x.png",
+      "size" : "16x16",
       "scale" : "1x"
     },
     {
-      "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "clutch-2x.png",
+      "size" : "16x16",
       "scale" : "2x"
     },
     {
@@ -33,8 +31,9 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "mac",
       "size" : "256x256",
+      "idiom" : "mac",
+      "filename" : "clutch-256.png",
       "scale" : "1x"
     },
     {

@@ -68,16 +68,17 @@
 
 - (void)menuWillOpen:(NSMenu *)menu {
     // update menu without waiting for the timer to fire next
-    [_pollTimer fire];
+    [self.pollTimer fire];
 }
 
 - (void)setupBarMenu {
     // Icon by Eleonor Wang from www.flaticon.com, licensed under CC-3.0-BY
     
-    _barItem = [[NSStatusBar systemStatusBar]statusItemWithLength:NSSquareStatusItemLength];
-    _barItem.button.image = [NSImage imageNamed:@"menu-icon"];
-    _barItem.highlightMode = YES;
-    _barItem.menu = _barMenu;
+    NSStatusItem* barItem = [[NSStatusBar systemStatusBar]statusItemWithLength:NSSquareStatusItemLength];
+    barItem.button.image = [NSImage imageNamed:@"menu-icon"];
+    barItem.highlightMode = YES;
+    barItem.menu = self.barMenu;
+    self.barItem = barItem;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -89,7 +90,7 @@
     
     [self setupBarMenu];
     
-    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:POLL_INTERVAL repeats:YES block:^(NSTimer * _Nonnull timer) {
+    self.pollTimer = [NSTimer scheduledTimerWithTimeInterval:POLL_INTERVAL repeats:YES block:^(NSTimer * _Nonnull timer) {
         ClutchInterface* bindInterface = [clutch getBindInterface];
         
         if (bindInterface) {
@@ -110,26 +111,26 @@
                 }
             }
             
-            [_statusItem setTitle:[NSString stringWithFormat:@"Binding to %@", bindInterface.name]];
+            [self.statusItem setTitle:[NSString stringWithFormat:@"Binding to %@", bindInterface.name]];
         }
         else {
-            _statusItem.title = @"Not Binding";
+            self.statusItem.title = @"Not Binding";
         }
         
-        [_bindAddressItem setTitle:[NSString stringWithFormat:@"Bind Address: %@", bindInterface ? bindInterface.address : @"None"]];
+        [self.bindAddressItem setTitle:[NSString stringWithFormat:@"Bind Address: %@", bindInterface ? bindInterface.address : @"None"]];
     }];
     
     // if NSTimer is not added to the main run loop, it will not fire while the menu is open!
-    [[NSRunLoop mainRunLoop]addTimer:_pollTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop mainRunLoop]addTimer:self.pollTimer forMode:NSRunLoopCommonModes];
     
     // run timer action immediately on startup
-    [_pollTimer fire];
+    [self.pollTimer fire];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
     NSLog(@"invalidating timer");
-    [_pollTimer invalidate];
+    [self.pollTimer invalidate];
 }
 
 @end
