@@ -20,7 +20,7 @@ The app has 2 parts:
 
 You can download the app here (move it to your Applications folder):
 
-https://mega.nz/#!qEh1AQQY!TK2gStUVWhaSG_hB-G_NSLjg2pcS8PEW4Jz1pYOyS5I
+https://mega.nz/#!2IAXUYJL!jN7EBqaT9mFQI0SjDl-rE7ISlM_zmiYatGhfLqjxT9c
 
 ## Changelog
 
