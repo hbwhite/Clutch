@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -15,6 +16,7 @@
             <connections>
                 <outlet property="barMenu" destination="bna-To-KhK" id="TSE-Ev-SaL"/>
                 <outlet property="bindAddressItem" destination="VEi-TH-bDk" id="Ip0-TM-239"/>
+                <outlet property="interfaceStatusItem" destination="g12-Jr-9KT" id="dBT-eu-40W"/>
                 <outlet property="statusItem" destination="t38-0h-qSz" id="Byq-aD-4HV"/>
             </connections>
         </customObject>
@@ -27,7 +29,17 @@
                 <menuItem title="Bind Address: 127.0.0.1" enabled="NO" id="VEi-TH-bDk">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
+                <menuItem title="Interface Status: Down" enabled="NO" id="g12-Jr-9KT">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="7ct-lg-o0F"/>
+                <menuItem title="Check for Updates..." id="Vus-9O-tOM">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="0yb-K8-MAk"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Vo9-Jc-0dm"/>
                 <menuItem title="Open Clutch" id="0Gg-Ff-uWJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

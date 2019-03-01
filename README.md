@@ -20,9 +20,13 @@ The app has 2 parts:
 
 You can download the app here (move it to your Applications folder):
 
-https://mega.nz/#!2IAXUYJL!jN7EBqaT9mFQI0SjDl-rE7ISlM_zmiYatGhfLqjxT9c
+https://mega.nz/#!2BYHGYJS!TYZUOT01O2uTzYF870uWt48NC5NsFSGUv5V9ZtJ8qW4
 
 ## Changelog
+
+v1.3:
+- Clutch now restarts Transmission if your binding interface disappears and reappears. This fixes an issue where Transmission would fail to bind to your VPN if it started before the interface was online (this could happen on boot if Transmission opened before your VPN started)
+- Adds support for automatic updates within Clutch. You can also select Clutch > Check for Updates... from the menu bar to manually update the app
 
 v1.2:
 - Support for Dark Mode (colors have been adjusted to work in both Light and Dark Mode)
@@ -36,6 +40,9 @@ v1.0:
 - Initial release
 
 ## Archives
+
+v1.3:
+https://mega.nz/#!2BYHGYJS!TYZUOT01O2uTzYF870uWt48NC5NsFSGUv5V9ZtJ8qW4
 
 v1.2:
 https://mega.nz/#!2IAXUYJL!jN7EBqaT9mFQI0SjDl-rE7ISlM_zmiYatGhfLqjxT9c

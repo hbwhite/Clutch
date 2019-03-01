@@ -3,37 +3,10 @@
 //  ClutchAgent
 //
 //  Created by Harrison White on 2/25/18.
-//  Copyright © 2018 Harrison White. All rights reserved.
+//  Copyright © 2019 Harrison White. All rights reserved.
 //
-
-/*
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the project's author nor the names of its
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
- * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//  See LICENSE for licensing information
+//
 
 #import "AppDelegate.h"
 #import "Clutch.h"
@@ -45,6 +18,7 @@
 @property (nonatomic, strong) IBOutlet NSMenu* barMenu;
 @property (nonatomic, strong) IBOutlet NSMenuItem* statusItem;
 @property (nonatomic, strong) IBOutlet NSMenuItem* bindAddressItem;
+@property (nonatomic, strong) IBOutlet NSMenuItem* interfaceStatusItem;
 @property (nonatomic, strong) NSStatusItem* barItem;
 @property (nonatomic, strong) NSTimer* pollTimer;
 
@@ -52,18 +26,34 @@
 
 @implementation AppDelegate
 
+- (IBAction)checkForUpdates:(id)sender {
+    [self launchClutch:YES];
+}
+
 - (IBAction)openTransmission:(id)sender {
     [[NSWorkspace sharedWorkspace]launchApplication:@"Transmission"];
 }
 
 - (IBAction)openClutch:(id)sender {
-    NSArray *pathComponents = [[[NSBundle mainBundle]bundlePath]pathComponents];
-    NSString *path = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
-    [[NSWorkspace sharedWorkspace]launchApplication:path];
+    [self launchClutch:NO];
 }
 
 - (IBAction)quitClutchAgent:(id)sender {
     [NSApp terminate:nil];
+}
+
+- (void)launchClutch:(BOOL)checkForUpdates {
+    // NSArray *pathComponents = [[[NSBundle mainBundle]bundlePath]pathComponents];
+    // NSString *path = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
+    // [[NSWorkspace sharedWorkspace]launchApplication:path];
+    
+    // using a custom URL scheme so we can tell Clutch to check for updates even if it is already running
+    // (a custom launch argument would only work if Clutch wasn't already running)
+    if (checkForUpdates) {
+        [[NSWorkspace sharedWorkspace]openURL:[NSURL URLWithString:@"clutch-transmission:checkForUpdates"]];
+    } else {
+        [[NSWorkspace sharedWorkspace]openURL:[NSURL URLWithString:@"clutch-transmission:"]];
+    }
 }
 
 - (void)menuWillOpen:(NSMenu *)menu {
@@ -90,10 +80,21 @@
     
     [self setupBarMenu];
     
+    // initially set interfacePreviouslyUp to YES
+    // so Clutch doesn't automatically restart Transmission
+    // when it first launches, thinking the interface
+    // was previously down and just went up with the same IP
+    // (see comment below for why Clutch restarts Transmission
+    // in this situation)
+    __block BOOL interfacePreviouslyUp = YES;
+    
     self.pollTimer = [NSTimer scheduledTimerWithTimeInterval:POLL_INTERVAL repeats:YES block:^(NSTimer * _Nonnull timer) {
         ClutchInterface* bindInterface = [clutch getBindInterface];
         
         if (bindInterface) {
+            BOOL interfaceUp = NO;
+            BOOL didRebind = NO;
+            
             NSArray* interfaces = [clutch getInterfaces];
             for (ClutchInterface* interface in interfaces) {
                 // if the name and ipv4 status match, treat as identical
@@ -102,7 +103,11 @@
                 // if an IPv6 interface is used instead of its IPv4 counterpart)
                 
                 if ([interface.name isEqualToString:bindInterface.name] && interface.ipv4 == bindInterface.ipv4) {
+                    interfaceUp = YES;
+                    
                     if (![interface.address isEqualToString:bindInterface.address]) {
+                        didRebind = YES;
+                        
                         NSLog(@"interface address changed, binding to new IP...\n");
                         [clutch bindToInterface:interface];
                         bindInterface = interface; // used below to update status
@@ -110,8 +115,24 @@
                     break;
                 }
             }
+            if (interfaceUp && !interfacePreviouslyUp && !didRebind) {
+                // interface was down and just came back up, and the binding IP was the same,
+                // so we didn't re-bind and Transmission wasn't restarted.
+                // restart Transmission to avoid the situation below:
+                
+                // (if Transmission was previously bound to the interface's IP and it started before the
+                // interface was up, binding to that IP would have failed, causing Transmission to not send
+                // any traffic until it was restarted; Clutch restarts Transmission when it binds to a new IP
+                // (hence the !didRebind check above), but if the binding IP is the same, Clutch won't
+                // re-bind and restart Transmission, causing it to get stuck in the situation described above;
+                // this restart fixes that situation)
+                
+                [clutch restartTransmission];
+            }
+            interfacePreviouslyUp = interfaceUp;
             
             [self.statusItem setTitle:[NSString stringWithFormat:@"Binding to %@", bindInterface.name]];
+            [self.interfaceStatusItem setTitle:[NSString stringWithFormat:@"Interface Status: %@", interfaceUp ? @"Up" : @"Down"]];
         }
         else {
             self.statusItem.title = @"Not Binding";

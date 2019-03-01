@@ -3,39 +3,13 @@
 //  Clutch
 //
 //  Created by Harrison White on 2/25/18.
-//  Copyright © 2018 Harrison White. All rights reserved.
+//  Copyright © 2019 Harrison White. All rights reserved.
+//
+//  See LICENSE for licensing information
 //
 
-/*
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the project's author nor the names of its
- * contributors may be used to endorse or promote products derived from
- * this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
- * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 #import "Clutch.h"
+#import "Reaper.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 
 #define _GNU_SOURCE /* To get defns of NI_MAXSERV and NI_MAXHOST */
@@ -56,13 +30,8 @@ NSString* kTransmissionBundleID     = @"org.m0k.transmission";
 
 NSString* kBindInterfaceKey         = @"BindInterface";
 
-// NSRunningApplication -isTerminated
-NSString* kAppTerminatedKeyPath     = @"isTerminated";
-
 NSString* kBindAddressIPv4Key       = @"BindAddressIPv4";
 NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
-
-static void *kAppTerminatedContext  = &kAppTerminatedContext;
 
 @implementation ClutchInterface
 
@@ -188,43 +157,12 @@ static void *kAppTerminatedContext  = &kAppTerminatedContext;
     // system("/usr/bin/killall Transmission 2>/dev/null");
     
     // close Transmission if it's running
-    
-    // retain these NSRunningApplication instances
-    // otherwise they will be released by ARC while we're still observing them to see when they terminate and crash the app
-    [self.transmissionInstances addObjectsFromArray:[NSRunningApplication runningApplicationsWithBundleIdentifier:kTransmissionBundleID]];
-    
-    for (NSRunningApplication* app in self.transmissionInstances) {
-        [app addObserver:self forKeyPath:kAppTerminatedKeyPath options:NSKeyValueObservingOptionNew context:kAppTerminatedContext];
-        
-        // if plain -terminate was used, Transmission would present an "are you sure" dialog that would prevent the app from quitting
-        [app forceTerminate];
-    }
-    return YES;
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-    
-    if (context == kAppTerminatedContext) {
-        // we no longer need to observe the "isTerminated" property
-        // must remove observers before releasing the object
-        [object removeObserver:self forKeyPath:kAppTerminatedKeyPath context:kAppTerminatedContext];
-        
-        // we no longer need to retain this NSRunningApplication instance
-        [self.transmissionInstances removeObject:object];
-        
+    [[Reaper sharedInstance]killAppWithBundleID:kTransmissionBundleID callback:^{
         // relaunch Transmission since it was running
         [[NSWorkspace sharedWorkspace]launchApplication:@"Transmission"];
-        
-    } else {
-        // Any unrecognized context must belong to super
-        [super observeValueForKeyPath:keyPath
-                             ofObject:object
-                               change:change
-                              context:context];
-    }
+    }];
+    
+    return YES;
 }
 
 // I was looking for a way to get a callback when a utun interface changed.
