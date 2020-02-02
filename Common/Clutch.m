@@ -3,13 +3,14 @@
 //  Clutch
 //
 //  Created by Harrison White on 2/25/18.
-//  Copyright © 2019 Harrison White. All rights reserved.
+//  Copyright © 2020 Harrison White. All rights reserved.
 //
 //  See LICENSE for licensing information
 //
 
 #import "Clutch.h"
 #import "Reaper.h"
+#import "Constants.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 
 #define _GNU_SOURCE /* To get defns of NI_MAXSERV and NI_MAXHOST */
@@ -22,16 +23,22 @@
 #include <unistd.h>
 #include <string.h>
 
+static Clutch *sharedInstance   = nil;
+
 // You need to DISABLE the App Sandbox in "capabilities" in the Xcode project before things
 // like editing other apps' preferences, killing other processes, etc. will function properly
 
-NSString* kGroupPreferencesID       = @"8TSRGQJRTM.group.com.rcx.clutch";
-NSString* kTransmissionBundleID     = @"org.m0k.transmission";
+// Also, apparently you must disable the sandbox in order to prompt the user for Accessibility permissions
+// (necessary for gracefully quitting Transmission via AppleScript)
+// https://forums.developer.apple.com/thread/24288
 
-NSString* kBindInterfaceKey         = @"BindInterface";
+static NSString* kGroupPreferencesID        = @"8TSRGQJRTM.group.com.rcx.clutch";
 
-NSString* kBindAddressIPv4Key       = @"BindAddressIPv4";
-NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
+static NSString* kBindInterfaceKey          = @"BindInterface";
+static NSString* kGracefullyRestartKey      = @"Gracefully Restart";
+
+static NSString* kBindAddressIPv4Key        = @"BindAddressIPv4";
+static NSString* kBindAddressIPv6Key        = @"BindAddressIPv6";
 
 @implementation ClutchInterface
 
@@ -66,6 +73,15 @@ NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
 
 @implementation Clutch
 
++ (instancetype)sharedInstance {
+    @synchronized (self) {
+        if (!sharedInstance) {
+            sharedInstance = [[Clutch alloc]init];
+        }
+        return sharedInstance;
+    }
+}
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -82,7 +98,7 @@ NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
     return data ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : nil;
 }
 
-- (BOOL)unbindFromInterface {
+- (void)unbindFromInterface {
     NSUserDefaults* transmissionDefaults = [self transmissionDefaults];
     [transmissionDefaults removeObjectForKey:kBindAddressIPv4Key];
     [transmissionDefaults removeObjectForKey:kBindAddressIPv6Key];
@@ -90,11 +106,9 @@ NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
     
     [self.clutchGroupDefaults removeObjectForKey:kBindInterfaceKey];
     [self.clutchGroupDefaults synchronize];
-    
-    return [self restartTransmission];
 }
 
-- (BOOL)bindToInterface:(ClutchInterface *)interface {
+- (void)bindToInterface:(ClutchInterface *)interface {
     NSUserDefaults* transmissionDefaults = [self transmissionDefaults];
     if (interface.ipv4) {
         [transmissionDefaults removeObjectForKey:kBindAddressIPv6Key];
@@ -108,11 +122,9 @@ NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
     
     [self.clutchGroupDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:interface] forKey:kBindInterfaceKey];
     [self.clutchGroupDefaults synchronize];
-    
-    return [self restartTransmission];
 }
 
-- (BOOL)bindToInterfaceWithName:(NSString *)name {
+- (void)bindToInterfaceWithName:(NSString *)name {
     // update bind address
     
     // Apple docs say specifying another app's identifier will return its preferences (assuming there is NO sandbox in place)
@@ -131,9 +143,25 @@ NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
     
     ClutchInterface* bindInterface = nil;
     
+    NSLog(@"clutch core bindToInterfaceWithName \"%@\"", name);
+    
     for (ClutchInterface* interface in [self getInterfaces]) {
-        if ([interface.name isEqualToString:name]) {
-            bindInterface = interface;
+        // NSLog(@"checking interface %@ %@ %@", interface.name, interface.address, interface.ipv4 ? @"ipv4" : @"ipv6");
+        
+        NSRange regexMatchRange = [interface.name rangeOfString:name options:NSRegularExpressionSearch];
+        // NSLog(@"comparing range %@ to %@", NSStringFromRange(regexMatchRange), NSStringFromRange(NSMakeRange(0, interface.name.length)));
+        if (regexMatchRange.location == 0 && regexMatchRange.length == interface.name.length) {
+            NSLog(@"matched; binding");
+            
+            // regex matched whole interface name; use this interface
+            bindInterface = [[ClutchInterface alloc]init];
+            
+            // set bind interface name to provided regex
+            bindInterface.name = name;
+            
+            // copy other values from matching ClutchInterface object
+            bindInterface.address = interface.address;
+            bindInterface.ipv4 = interface.ipv4;
             break;
         }
     }
@@ -149,20 +177,7 @@ NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
         bindInterface.ipv4 = YES;
     }
     
-    return [self bindToInterface:bindInterface];
-}
-
-- (BOOL)restartTransmission {
-    // alternative solution
-    // system("/usr/bin/killall Transmission 2>/dev/null");
-    
-    // close Transmission if it's running
-    [[Reaper sharedInstance]killAppWithBundleID:kTransmissionBundleID callback:^{
-        // relaunch Transmission since it was running
-        [[NSWorkspace sharedWorkspace]launchApplication:@"Transmission"];
-    }];
-    
-    return YES;
+    [self bindToInterface:bindInterface];
 }
 
 // I was looking for a way to get a callback when a utun interface changed.
@@ -240,6 +255,15 @@ NSString* kBindAddressIPv6Key       = @"BindAddressIPv6";
     freeifaddrs(ifaddr);
     
     return interfaces;
+}
+
+- (BOOL)shouldRestartGracefully {
+    return [self.clutchGroupDefaults boolForKey:kGracefullyRestartKey];
+}
+
+- (void)setShouldRestartGracefully:(BOOL)restartGracefully {
+    [self.clutchGroupDefaults setBool:restartGracefully forKey:kGracefullyRestartKey];
+    [self.clutchGroupDefaults synchronize];
 }
 
 @end

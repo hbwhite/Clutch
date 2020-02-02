@@ -3,7 +3,7 @@
 //  Clutch
 //
 //  Created by Harrison White on 2/25/18.
-//  Copyright © 2019 Harrison White. All rights reserved.
+//  Copyright © 2020 Harrison White. All rights reserved.
 //
 //  See LICENSE for licensing information
 //
@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "Clutch.h"
 #import "Reaper.h"
+#import "Constants.h"
 
 @interface AppDelegate ()
 
@@ -31,6 +32,8 @@
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
     for (NSURL* url in urls) {
         if ([[url scheme]isEqualToString:@"clutch-transmission"]) {
+            NSLog(@"clutch got url call");
+            
             // check if the user opened Clutch via the "Check for Updates..."
             // menu item in Clutch Agent
             
@@ -40,8 +43,19 @@
             // I used this odd url scheme name in case the user has another app named
             // "clutch" installed that needs the plain "clutch" url scheme
             
-            if ([[url resourceSpecifier]isEqualToString:kCheckForUpdatesArg]) {
-                 [[SUUpdater sharedUpdater]checkForUpdates:self];
+            NSString* resource = [url resourceSpecifier];
+            if ([resource isEqualToString:kCheckForUpdatesArg]) {
+                [[SUUpdater sharedUpdater]checkForUpdates:self];
+            } else if ([resource isEqualToString:@"quitCallback"]) {
+                NSLog(@"clutch got transmission quit callback, posting notification");
+                // Clutch Agent is done quitting Transmission gracefully
+                [[NSNotificationCenter defaultCenter]postNotificationName:kTransmissionQuitNotificationName object:nil];
+            } else if ([resource isEqualToString:@"hasPermissionsTrue"]) {
+                NSLog(@"clutch got has permissions TRUE");
+                [[NSNotificationCenter defaultCenter]postNotificationName:kClutchAgentPermissionsTrueNotificationName object:nil];
+            } else if ([resource isEqualToString:@"hasPermissionsFalse"]) {
+                NSLog(@"clutch got has permissions FALSE");
+                [[NSNotificationCenter defaultCenter]postNotificationName:kClutchAgentPermissionsFalseNotificationName object:nil];
             }
         }
     }
@@ -64,8 +78,8 @@
     // Here, we force Clutch Agent to quit so the new version of Clutch Agent will start when
     // the Clutch app is restarted.
     
-    [[Reaper sharedInstance]killAppWithBundleID:kClutchAgentBundleID callback:^{
-        // done restarting Clutch Agent, now let Sparkle restart the Clutch app
+    [[Reaper sharedInstance]killAppWithBundleID:kClutchAgentBundleID terminationBlock:nil callback:^(BOOL wasRunning) {
+        // killed Clutch Agent, now let Sparkle restart the Clutch app
         // which will launch the new version of Clutch Agent
         [invocation invoke];
     }];

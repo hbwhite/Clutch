@@ -1,0 +1,12 @@
+# test script to see if we have Accessibility and Automation permissions
+# this script will be triggered by Clutch, which calls Clutch Agent,
+# so we know Clutch will be available to receive this test event;
+# once the user grants Clutch Agent the permissions needed to run this
+# test script, it can then reuse those permissions to restart Transmission
+# when it needs to in the future
+
+tell application "System Events"
+    tell application process "Clutch"
+        select window 1
+    end tell
+end tell

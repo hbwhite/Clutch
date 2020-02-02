@@ -1,0 +1,18 @@
+tell application "System Events"
+    
+    # if there are no active torrents, Transmission will quit immediately
+    # with no prompt, which would cause this script to hang for several seconds;
+    # checking if Transmission is running avoids that situation
+    
+    if application process "Transmission" exists then
+        tell application process "Transmission"
+            if window "Transmission" exists then
+                if 1st sheet of window "Transmission" exists then
+                    tell 1st sheet of window "Transmission"
+                        click button "Quit"
+                    end tell
+                end if
+            end if
+        end tell
+    end if
+end tell

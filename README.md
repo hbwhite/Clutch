@@ -24,6 +24,15 @@ https://mega.nz/#!2BYHGYJS!TYZUOT01O2uTzYF870uWt48NC5NsFSGUv5V9ZtJ8qW4
 
 ## Changelog
 
+v1.4:
+- Clutch can now restart Transmission gracefully without using force-quit. This prevents you from losing your progress or torrent settings when Clutch has to restart Transmission. Enable this feature in Clutch for setup instructions.
+- Added regex support for interface names. Be sure to use real regex and not shell glob. For example, enter utun.* instead of utun* if you want to use regex.
+- Added a nice loading animation while Transmission is binding/unbinding
+- Clutch now updates the list of interfaces each time you open the dropdown
+- Fixed a bug where Transmission wouldn't restart if the bar menu was open
+- Clutch now uses the new Mac OS hardened runtime
+- Other minor bug fixes and performance improvements
+
 v1.3:
 - Clutch now restarts Transmission if your binding interface disappears and reappears. This fixes an issue where Transmission would fail to bind to your VPN if it started before the interface was online (this could happen on boot if Transmission opened before your VPN started)
 - Adds support for automatic updates within Clutch. You can also select Clutch > Check for Updates... from the menu bar to manually update the app

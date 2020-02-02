@@ -9,10 +9,10 @@ target 'Clutch' do
   pod 'Sparkle'
 end
 
-target 'ClutchAgent' do
+target 'Clutch Agent' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
 
-  # Pods for ClutchAgent
+  # Pods for Clutch Agent
 
 end

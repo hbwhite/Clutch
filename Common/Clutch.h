@@ -3,7 +3,7 @@
 //  Clutch
 //
 //  Created by Harrison White on 2/25/18.
-//  Copyright © 2019 Harrison White. All rights reserved.
+//  Copyright © 2020 Harrison White. All rights reserved.
 //
 //  See LICENSE for licensing information
 //
@@ -28,11 +28,17 @@ static NSString* kClutchAgentBundleID   = @"com.rcx.clutchagent";
 
 @property (nonatomic, strong) NSUserDefaults* clutchGroupDefaults;
 
+/*
+ * Returns the Clutch singleton
+ */
++ (instancetype)sharedInstance;
+
 - (ClutchInterface *)getBindInterface;
 - (NSArray *)getInterfaces;
-- (BOOL)unbindFromInterface;
-- (BOOL)bindToInterface:(ClutchInterface *)interface;
-- (BOOL)bindToInterfaceWithName:(NSString *)name;
-- (BOOL)restartTransmission;
+- (void)unbindFromInterface;
+- (void)bindToInterface:(ClutchInterface *)interface;
+- (void)bindToInterfaceWithName:(NSString *)name;
+- (BOOL)shouldRestartGracefully;
+- (void)setShouldRestartGracefully:(BOOL)restartGracefully;
 
 @end

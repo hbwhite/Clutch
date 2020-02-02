@@ -8,9 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		39D9E34B49B7DE0E190BDA35 /* Pods_Clutch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78116CF31A88C196F66CF294 /* Pods_Clutch.framework */; };
+		426EBF2676B34C3AB8A9558A /* libPods-Clutch Agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B222B3523AE9F3F2D8F049 /* libPods-Clutch Agent.a */; };
+		84078B6D23E53768007D8567 /* quit-transmission-applescript.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84078B6B23E53209007D8567 /* quit-transmission-applescript.txt */; };
+		84078B7623E5EED0007D8567 /* GracefulQuit.m in Sources */ = {isa = PBXBuildFile; fileRef = 84078B7523E5EED0007D8567 /* GracefulQuit.m */; };
+		84078B7723E5EED0007D8567 /* GracefulQuit.m in Sources */ = {isa = PBXBuildFile; fileRef = 84078B7523E5EED0007D8567 /* GracefulQuit.m */; };
+		84078B7A23E61ED9007D8567 /* test-applescript.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84078B7123E54F58007D8567 /* test-applescript.txt */; };
+		84078B7D23E6650B007D8567 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84078B7C23E6650B007D8567 /* PermissionsViewController.m */; };
 		8433E862204616B100EC32F4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8433E861204616B100EC32F4 /* Credits.rtf */; };
 		8433E86420461BCC00EC32F4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8433E86320461BCC00EC32F4 /* LICENSE */; };
-		843BD19420460D2300BA999D /* ClutchAgent.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 843E52EC204360C800E43F59 /* ClutchAgent.app */; };
+		843BD19420460D2300BA999D /* Clutch Agent.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 843E52EC204360C800E43F59 /* Clutch Agent.app */; };
 		843E51F9204326DB00E43F59 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 843E51F8204326DB00E43F59 /* AppDelegate.m */; };
 		843E51FC204326DB00E43F59 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843E51FB204326DB00E43F59 /* ViewController.m */; };
 		843E5201204326DB00E43F59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843E51FF204326DB00E43F59 /* Main.storyboard */; };
@@ -24,7 +30,6 @@
 		8493160E22289EFA004D420C /* Reaper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8493160A22289A10004D420C /* Reaper.m */; };
 		84BD785D2043F47200D6EAC9 /* Clutch.m in Sources */ = {isa = PBXBuildFile; fileRef = 843E522820432B2000E43F59 /* Clutch.m */; };
 		84C9A5CD222780BC00C4E8FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C9A5CC222780BC00C4E8FE /* Assets.xcassets */; };
-		E7D68A8A1F954A04ACFEE553 /* libPods-ClutchAgent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 192E3CBCB939EAF5B8620973 /* libPods-ClutchAgent.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,18 +49,25 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				843BD19420460D2300BA999D /* ClutchAgent.app in CopyFiles */,
+				843BD19420460D2300BA999D /* Clutch Agent.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09D6B169B38135DBBED7EED1 /* Pods-ClutchAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClutchAgent.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClutchAgent/Pods-ClutchAgent.release.xcconfig"; sourceTree = "<group>"; };
-		192E3CBCB939EAF5B8620973 /* libPods-ClutchAgent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClutchAgent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6746C3AA96D9059B1B62E542 /* Pods-ClutchAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClutchAgent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClutchAgent/Pods-ClutchAgent.debug.xcconfig"; sourceTree = "<group>"; };
+		27B222B3523AE9F3F2D8F049 /* libPods-Clutch Agent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Clutch Agent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E08C6E573AE999B8AC1AC17 /* Pods-Clutch Agent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clutch Agent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clutch Agent/Pods-Clutch Agent.debug.xcconfig"; sourceTree = "<group>"; };
+		515484207550C0E36999F965 /* Pods-Clutch Agent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clutch Agent.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clutch Agent/Pods-Clutch Agent.release.xcconfig"; sourceTree = "<group>"; };
 		6F76BF31D75DE158F77370E5 /* Pods-Clutch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clutch.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clutch/Pods-Clutch.release.xcconfig"; sourceTree = "<group>"; };
 		78116CF31A88C196F66CF294 /* Pods_Clutch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clutch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84078B6B23E53209007D8567 /* quit-transmission-applescript.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "quit-transmission-applescript.txt"; sourceTree = "<group>"; };
+		84078B7123E54F58007D8567 /* test-applescript.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "test-applescript.txt"; sourceTree = "<group>"; };
+		84078B7423E5EED0007D8567 /* GracefulQuit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GracefulQuit.h; sourceTree = "<group>"; };
+		84078B7523E5EED0007D8567 /* GracefulQuit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GracefulQuit.m; sourceTree = "<group>"; };
+		84078B7823E5F0CC007D8567 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		84078B7B23E6650B007D8567 /* PermissionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PermissionsViewController.h; sourceTree = "<group>"; };
+		84078B7C23E6650B007D8567 /* PermissionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PermissionsViewController.m; sourceTree = "<group>"; };
 		8433E861204616B100EC32F4 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		8433E86320461BCC00EC32F4 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		843E51F4204326DB00E43F59 /* Clutch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clutch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +80,7 @@
 		843E5203204326DB00E43F59 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		843E522720432B2000E43F59 /* Clutch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Clutch.h; sourceTree = "<group>"; };
 		843E522820432B2000E43F59 /* Clutch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Clutch.m; sourceTree = "<group>"; };
-		843E52EC204360C800E43F59 /* ClutchAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClutchAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		843E52EC204360C800E43F59 /* Clutch Agent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clutch Agent.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		843E52EE204360C800E43F59 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		843E52EF204360C900E43F59 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		843E52F1204360C900E43F59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -79,6 +91,8 @@
 		8493160C22289A1D004D420C /* Reaper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reaper.h; sourceTree = "<group>"; };
 		84C9A5CC222780BC00C4E8FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9AAD3BB548FCC4FC5E488355 /* Pods-Clutch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clutch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clutch/Pods-Clutch.debug.xcconfig"; sourceTree = "<group>"; };
+		EC2A038D56FD917AC0844F7D /* Pods-ClutchAgent.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClutchAgent.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClutchAgent/Pods-ClutchAgent.release.xcconfig"; sourceTree = "<group>"; };
+		EFAFE76D40FFB37DBAB20785 /* Pods-ClutchAgent.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClutchAgent.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClutchAgent/Pods-ClutchAgent.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7D68A8A1F954A04ACFEE553 /* libPods-ClutchAgent.a in Frameworks */,
+				426EBF2676B34C3AB8A9558A /* libPods-Clutch Agent.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,8 +120,10 @@
 			children = (
 				9AAD3BB548FCC4FC5E488355 /* Pods-Clutch.debug.xcconfig */,
 				6F76BF31D75DE158F77370E5 /* Pods-Clutch.release.xcconfig */,
-				6746C3AA96D9059B1B62E542 /* Pods-ClutchAgent.debug.xcconfig */,
-				09D6B169B38135DBBED7EED1 /* Pods-ClutchAgent.release.xcconfig */,
+				EFAFE76D40FFB37DBAB20785 /* Pods-ClutchAgent.debug.xcconfig */,
+				EC2A038D56FD917AC0844F7D /* Pods-ClutchAgent.release.xcconfig */,
+				2E08C6E573AE999B8AC1AC17 /* Pods-Clutch Agent.debug.xcconfig */,
+				515484207550C0E36999F965 /* Pods-Clutch Agent.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -118,7 +134,7 @@
 				8433E86320461BCC00EC32F4 /* LICENSE */,
 				843E529F204355A700E43F59 /* Common */,
 				843E51F6204326DB00E43F59 /* Clutch */,
-				843E52ED204360C800E43F59 /* ClutchAgent */,
+				843E52ED204360C800E43F59 /* Clutch Agent */,
 				843E51F5204326DB00E43F59 /* Products */,
 				843E52FD204364F400E43F59 /* Frameworks */,
 				5B1312DB54BBAA3CA066B1AC /* Pods */,
@@ -129,7 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				843E51F4204326DB00E43F59 /* Clutch.app */,
-				843E52EC204360C800E43F59 /* ClutchAgent.app */,
+				843E52EC204360C800E43F59 /* Clutch Agent.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,6 +158,8 @@
 				843E51F8204326DB00E43F59 /* AppDelegate.m */,
 				843E51FA204326DB00E43F59 /* ViewController.h */,
 				843E51FB204326DB00E43F59 /* ViewController.m */,
+				84078B7B23E6650B007D8567 /* PermissionsViewController.h */,
+				84078B7C23E6650B007D8567 /* PermissionsViewController.m */,
 				843E51FF204326DB00E43F59 /* Main.storyboard */,
 				843E5202204326DB00E43F59 /* Info.plist */,
 				843E5203204326DB00E43F59 /* main.m */,
@@ -153,6 +171,7 @@
 		843E529F204355A700E43F59 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				84078B7823E5F0CC007D8567 /* Constants.h */,
 				843E522720432B2000E43F59 /* Clutch.h */,
 				843E522820432B2000E43F59 /* Clutch.m */,
 				8493160C22289A1D004D420C /* Reaper.h */,
@@ -161,24 +180,28 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		843E52ED204360C800E43F59 /* ClutchAgent */ = {
+		843E52ED204360C800E43F59 /* Clutch Agent */ = {
 			isa = PBXGroup;
 			children = (
+				84078B7123E54F58007D8567 /* test-applescript.txt */,
+				84078B6B23E53209007D8567 /* quit-transmission-applescript.txt */,
 				843E52EE204360C800E43F59 /* AppDelegate.h */,
 				843E52EF204360C900E43F59 /* AppDelegate.m */,
+				84078B7423E5EED0007D8567 /* GracefulQuit.h */,
+				84078B7523E5EED0007D8567 /* GracefulQuit.m */,
 				843E52F1204360C900E43F59 /* Assets.xcassets */,
 				843E52F3204360C900E43F59 /* MainMenu.xib */,
 				843E52F6204360C900E43F59 /* Info.plist */,
 				843E52F7204360C900E43F59 /* main.m */,
 			);
-			path = ClutchAgent;
+			path = "Clutch Agent";
 			sourceTree = "<group>";
 		};
 		843E52FD204364F400E43F59 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				78116CF31A88C196F66CF294 /* Pods_Clutch.framework */,
-				192E3CBCB939EAF5B8620973 /* libPods-ClutchAgent.a */,
+				27B222B3523AE9F3F2D8F049 /* libPods-Clutch Agent.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -191,11 +214,11 @@
 			buildConfigurationList = 843E521E204326DC00E43F59 /* Build configuration list for PBXNativeTarget "Clutch" */;
 			buildPhases = (
 				06EB01785F2E8AAACBE3D278 /* [CP] Check Pods Manifest.lock */,
+				76A991CF6400F4E5BECA1B9B /* [CP] Embed Pods Frameworks */,
 				843E51F0204326DB00E43F59 /* Sources */,
 				843E51F1204326DB00E43F59 /* Frameworks */,
 				843E51F2204326DB00E43F59 /* Resources */,
 				843BD19020460BD500BA999D /* CopyFiles */,
-				76A991CF6400F4E5BECA1B9B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -207,11 +230,11 @@
 			productReference = 843E51F4204326DB00E43F59 /* Clutch.app */;
 			productType = "com.apple.product-type.application";
 		};
-		843E52EB204360C800E43F59 /* ClutchAgent */ = {
+		843E52EB204360C800E43F59 /* Clutch Agent */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 843E52FA204360C900E43F59 /* Build configuration list for PBXNativeTarget "ClutchAgent" */;
+			buildConfigurationList = 843E52FA204360C900E43F59 /* Build configuration list for PBXNativeTarget "Clutch Agent" */;
 			buildPhases = (
-				CC014FB7FADEE4875171A762 /* [CP] Check Pods Manifest.lock */,
+				932110B00ABF7D2C5BAEF204 /* [CP] Check Pods Manifest.lock */,
 				843E52E8204360C800E43F59 /* Sources */,
 				843E52E9204360C800E43F59 /* Frameworks */,
 				843E52EA204360C800E43F59 /* Resources */,
@@ -220,9 +243,9 @@
 			);
 			dependencies = (
 			);
-			name = ClutchAgent;
+			name = "Clutch Agent";
 			productName = ClutchAgent;
-			productReference = 843E52EC204360C800E43F59 /* ClutchAgent.app */;
+			productReference = 843E52EC204360C800E43F59 /* Clutch Agent.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -231,7 +254,7 @@
 		843E51EC204326DB00E43F59 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "RCX LLC";
 				TargetAttributes = {
 					843E51F3204326DB00E43F59 = {
@@ -274,7 +297,7 @@
 			projectRoot = "";
 			targets = (
 				843E51F3204326DB00E43F59 /* Clutch */,
-				843E52EB204360C800E43F59 /* ClutchAgent */,
+				843E52EB204360C800E43F59 /* Clutch Agent */,
 			);
 		};
 /* End PBXProject section */
@@ -295,6 +318,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84078B7A23E61ED9007D8567 /* test-applescript.txt in Resources */,
+				84078B6D23E53768007D8567 /* quit-transmission-applescript.txt in Resources */,
 				843E52F2204360C900E43F59 /* Assets.xcassets in Resources */,
 				843E52F5204360C900E43F59 /* MainMenu.xib in Resources */,
 			);
@@ -327,7 +352,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Clutch/Pods-Clutch-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Clutch/Pods-Clutch-frameworks.sh",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
 			);
@@ -338,21 +363,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clutch/Pods-Clutch-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Clutch/Pods-Clutch-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CC014FB7FADEE4875171A762 /* [CP] Check Pods Manifest.lock */ = {
+		932110B00ABF7D2C5BAEF204 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ClutchAgent-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Clutch Agent-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -367,8 +396,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				843E522920432B2000E43F59 /* Clutch.m in Sources */,
+				84078B7623E5EED0007D8567 /* GracefulQuit.m in Sources */,
 				8493160B22289A10004D420C /* Reaper.m in Sources */,
 				843E51FC204326DB00E43F59 /* ViewController.m in Sources */,
+				84078B7D23E6650B007D8567 /* PermissionsViewController.m in Sources */,
 				843E5204204326DB00E43F59 /* main.m in Sources */,
 				843E51F9204326DB00E43F59 /* AppDelegate.m in Sources */,
 			);
@@ -381,6 +412,7 @@
 				8493160E22289EFA004D420C /* Reaper.m in Sources */,
 				84BD785D2043F47200D6EAC9 /* Clutch.m in Sources */,
 				843E52F8204360C900E43F59 /* main.m in Sources */,
+				84078B7723E5EED0007D8567 /* GracefulQuit.m in Sources */,
 				843E52F0204360C900E43F59 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -390,7 +422,7 @@
 /* Begin PBXTargetDependency section */
 		843BD19620460D2E00BA999D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 843E52EB204360C800E43F59 /* ClutchAgent */;
+			target = 843E52EB204360C800E43F59 /* Clutch Agent */;
 			targetProxy = 843BD19520460D2E00BA999D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -527,12 +559,16 @@
 			baseConfigurationReference = 9AAD3BB548FCC4FC5E488355 /* Pods-Clutch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Clutch/Clutch.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEVELOPMENT_TEAM = 7F4P4N7V5T;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Clutch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rcx.clutch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -544,12 +580,16 @@
 			baseConfigurationReference = 6F76BF31D75DE158F77370E5 /* Pods-Clutch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Clutch/Clutch.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEVELOPMENT_TEAM = 7F4P4N7V5T;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Clutch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rcx.clutch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -558,15 +598,18 @@
 		};
 		843E52FB204360C900E43F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6746C3AA96D9059B1B62E542 /* Pods-ClutchAgent.debug.xcconfig */;
+			baseConfigurationReference = 2E08C6E573AE999B8AC1AC17 /* Pods-Clutch Agent.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEVELOPMENT_TEAM = 7F4P4N7V5T;
-				INFOPLIST_FILE = ClutchAgent/Info.plist;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "Clutch Agent/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rcx.clutchagent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -575,15 +618,18 @@
 		};
 		843E52FC204360C900E43F59 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09D6B169B38135DBBED7EED1 /* Pods-ClutchAgent.release.xcconfig */;
+			baseConfigurationReference = 515484207550C0E36999F965 /* Pods-Clutch Agent.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEVELOPMENT_TEAM = 7F4P4N7V5T;
-				INFOPLIST_FILE = ClutchAgent/Info.plist;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "Clutch Agent/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rcx.clutchagent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -611,7 +657,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		843E52FA204360C900E43F59 /* Build configuration list for PBXNativeTarget "ClutchAgent" */ = {
+		843E52FA204360C900E43F59 /* Build configuration list for PBXNativeTarget "Clutch Agent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				843E52FB204360C900E43F59 /* Debug */,
