@@ -20,7 +20,7 @@ The app has 2 parts:
 
 You can download the app here (move it to your Applications folder):
 
-https://mega.nz/#!2BYHGYJS!TYZUOT01O2uTzYF870uWt48NC5NsFSGUv5V9ZtJ8qW4
+https://github.com/hbwhite/Clutch/releases/download/v1.4/Clutch-v1.4.zip
 
 ## Changelog
 
