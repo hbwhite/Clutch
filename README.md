@@ -48,16 +48,3 @@ v1.1:
 v1.0:
 - Initial release
 
-## Archives
-
-v1.3:
-https://mega.nz/#!2BYHGYJS!TYZUOT01O2uTzYF870uWt48NC5NsFSGUv5V9ZtJ8qW4
-
-v1.2:
-https://mega.nz/#!2IAXUYJL!jN7EBqaT9mFQI0SjDl-rE7ISlM_zmiYatGhfLqjxT9c
-
-v1.1:
-https://mega.nz/#!qEh1AQQY!TK2gStUVWhaSG_hB-G_NSLjg2pcS8PEW4Jz1pYOyS5I
-
-v1.0:
-https://mega.nz/#!PYoQHKpY!ID4wO3XDzjfmsGqFws1AdiOT3PVkyRw7fbn3h7ZQXpc
